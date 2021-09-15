@@ -4,18 +4,24 @@
   "license": "GPL-3.0-or-later",
   "main": "cjs/ipaddrhash.js",
   "module": "esm/ipaddrhash.js",
+  "types": "types/ipaddrhash.d.ts",
   "files": [
     "cjs/**/*",
-    "esm/**/*"
+    "esm/**/*",
+    "types/**/*"
   ],
   "scripts": {
     "dev": "vite",
     "build": "vite build --base=./",
+    "clean": "rm -rf build cjs types",
+    "dist": "yarn run types && yarn run cjs",
     "cjs": "esbuild --bundle esm/ipaddrhash.js --format=cjs --outdir=cjs --external:ip-num --external:big-integer --external:crypto-hash",
+    "types": "tsc --declaration --emitDeclarationOnly --allowJs --outDir types esm/ipaddrhash.js ",
     "lint": "prettier --check .",
     "fix": "prettier --write .",
     "test:browser": "karma start --single-run --browsers FirefoxHeadless karma.conf.js",
-    "test:node": "mocha --require esbuild-register"
+    "test:node": "mocha --require esbuild-register",
+    "prepack": "yarn run dist"
   },
   "dependencies": {
     "big-integer": "^1.6.48",
@@ -41,6 +47,8 @@
     "postcss-normalize": "^10.0.0",
     "prettier": "^2.4.0",
     "sanitize.css": "^12.0.0",
+    "semantic-release": "^17.4.7",
+    "typescript": "^4.4.3",
     "vite": "^2.5.3",
     "vue": "^3.2.8"
   }
