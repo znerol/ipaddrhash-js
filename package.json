@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --base=./",
     "cjs": "esbuild --bundle esm/ipaddrhash.js --format=cjs --outdir=cjs --external:ip-num --external:big-integer --external:crypto-hash",
     "lint": "prettier --check .",
     "fix": "prettier --write .",
