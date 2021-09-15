@@ -2,6 +2,12 @@
   "name": "ipaddrhash",
   "version": "1.0.0",
   "license": "GPL-3.0-or-later",
+  "repository": "znerol/ipaddrhash-js",
+  "description": "A predictable addressing scheme for statically assigned IPv6 and IPv4 addresses based on hostnames",
+  "homepage": "https://github.com/znerol/ipaddrhash-js",
+  "bugs": {
+    "url": "https://github.com/znerol/ipaddrhash-js/issues"
+  },
   "main": "cjs/ipaddrhash.js",
   "module": "esm/ipaddrhash.js",
   "types": "types/ipaddrhash.d.ts",
