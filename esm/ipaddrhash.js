@@ -24,8 +24,8 @@ export const ipaddrHash = async (size, cidr, seed) => {
 
   if (network !== undefined && netmask !== undefined) {
     const hostmask = invertMask(size, netmask);
-    const hostaddr = BigInt(await sha256(seed), 16).and(hostmask);
-    return formatAddr(size, network.plus(hostaddr));
+    const hostaddr = BigInt(`0x${(await sha256(seed))}`) & hostmask;
+    return formatAddr(size, network + hostaddr);
   }
 };
 

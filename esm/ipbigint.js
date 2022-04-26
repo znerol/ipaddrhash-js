@@ -47,11 +47,11 @@ export const formatAddr = (size, ip) => {
 
   switch (size) {
     case IP4SIZE:
-      result = IPv4.fromNumber(ip).toString();
+      result = new IPv4(ip).toString();
       break;
 
     case IP6SIZE:
-      result = collapseIPv6Number(IPv6.fromNumber(ip).toString());
+      result = collapseIPv6Number(new IPv6(ip).toString());
       break;
   }
 
@@ -86,12 +86,12 @@ export const validateCidr = (size, cidr) => {
 };
 
 /**
- * Returns a pair of bigInt.BigInteger representing the network address and the
+ * Returns a pair of BigInt representing the network address and the
  * netmask given an IPv4 or IPv6 range in CIDR notation.
  *
  * @param {number} size
  * @param {string} cidr
- * @returns {bigInt.BigInteger[]|undefined}
+ * @returns {BigInt[]|undefined}
  */
 export const parseCidr = (size, cidr) => {
   let result = undefined;
@@ -121,11 +121,11 @@ export const parseCidr = (size, cidr) => {
  * Inverts the given IP mask.
  *
  * @param {number} size
- * @param {bigInt.BigInteger} mask
- * @returns {bigInt.BigInteger|undefined}
+ * @param {BigInt} mask
+ * @returns {BigInt|undefined}
  */
 export const invertMask = (size, mask) => {
   if (size in IPMAX) {
-    return IPMAX[size].xor(mask);
+    return IPMAX[size] ^ mask;
   }
 };

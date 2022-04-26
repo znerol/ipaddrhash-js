@@ -11,5 +11,8 @@ module.exports = function (config) {
       "test/**/*.spec.js": ["esbuild"],
     },
     files: ["test/**/*.spec.js"],
+    esbuild: {
+      target: "esnext",
+    },
   });
 };
