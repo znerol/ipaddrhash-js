@@ -1,4 +1,3 @@
-import bigInt from "big-integer";
 import {
   collapseIPv6Number,
   IPv4,
@@ -21,12 +20,12 @@ export const IP6SIZE = 128;
 /**
  * Largest possible value for an IPv4 address.
  */
-export const IP4MAX = bigInt("FFFFFFFF", 16);
+export const IP4MAX = 0xffffffffn;
 
 /**
  * Largest possible value for an IPv6 address.
  */
-export const IP6MAX = bigInt("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", 16);
+export const IP6MAX = 0xffffffffffffffffffffffffffffffffn;
 
 /**
  * Returns a map size => largest possible IP value.
@@ -40,7 +39,7 @@ export const IPMAX = {
  * Formats the given IP address.
  *
  * @param {number} size Address size, either IP4SIZE or IP6SIZE.
- * @param {bigInt.BigInteger} ip Numeric value of an IP number as a BigInteger.
+ * @param {BigInt} ip Numeric value of an IP number as a BigInt.
  * @returns {string|undefined}
  */
 export const formatAddr = (size, ip) => {
@@ -48,11 +47,11 @@ export const formatAddr = (size, ip) => {
 
   switch (size) {
     case IP4SIZE:
-      result = IPv4.fromBigInteger(ip).toString();
+      result = new IPv4(ip).toString();
       break;
 
     case IP6SIZE:
-      result = collapseIPv6Number(IPv6.fromBigInteger(ip).toString());
+      result = collapseIPv6Number(new IPv6(ip).toString());
       break;
   }
 
@@ -87,12 +86,12 @@ export const validateCidr = (size, cidr) => {
 };
 
 /**
- * Returns a pair of bigInt.BigInteger representing the network address and the
+ * Returns a pair of BigInt representing the network address and the
  * netmask given an IPv4 or IPv6 range in CIDR notation.
  *
  * @param {number} size
  * @param {string} cidr
- * @returns {bigInt.BigInteger[]|undefined}
+ * @returns {BigInt[]|undefined}
  */
 export const parseCidr = (size, cidr) => {
   let result = undefined;
@@ -122,11 +121,11 @@ export const parseCidr = (size, cidr) => {
  * Inverts the given IP mask.
  *
  * @param {number} size
- * @param {bigInt.BigInteger} mask
- * @returns {bigInt.BigInteger|undefined}
+ * @param {BigInt} mask
+ * @returns {BigInt|undefined}
  */
 export const invertMask = (size, mask) => {
   if (size in IPMAX) {
-    return IPMAX[size].xor(mask);
+    return IPMAX[size] ^ mask;
   }
 };

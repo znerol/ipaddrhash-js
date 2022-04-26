@@ -6,7 +6,6 @@ import {
   parseCidr,
   validateCidr,
 } from "./ipbigint.js";
-import bigInt from "big-integer";
 import { sha256 } from "crypto-hash";
 
 /**
@@ -25,8 +24,8 @@ export const ipaddrHash = async (size, cidr, seed) => {
 
   if (network !== undefined && netmask !== undefined) {
     const hostmask = invertMask(size, netmask);
-    const hostaddr = bigInt(await sha256(seed), 16).and(hostmask);
-    return formatAddr(size, network.plus(hostaddr));
+    const hostaddr = BigInt(`0x${(await sha256(seed))}`) & hostmask;
+    return formatAddr(size, network + hostaddr);
   }
 };
 
